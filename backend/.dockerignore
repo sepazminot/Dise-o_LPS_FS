@@ -1,0 +1,40 @@
+# ==============================================================================
+# Backend .dockerignore
+# Ignorar rutas que no deben entrar al build context / no existen aún
+# ==============================================================================
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.eggs
+*.egg-info
+dist
+build
+
+# Entornos y secrets locales
+.env.local
+.env.*.local
+.env
+/secrets
+
+# Datos locales / runtime
+/data
+/logs
+tmp
+*.db
+
+# Git
+.git
+.gitignore
+
+# Tests en runtime contenedor (no necesarios para imagen final)
+tests/
+
+# Archivos que aún no existen y no se deben copiar en runtime
+migrations/
+scripts/
+alembic.ini

@@ -1,0 +1,54 @@
+# Educational Backend - Pre-commit hooks
+# Install: pip install pre-commit && pre-commit install
+
+repos:
+  # Ruff - fast Python linter (replaces flake8, isort, pyupgrade, etc.)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.0
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  # MyPy - static type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [pydantic, fastapi, sqlalchemy, types-redis, types-requests]
+        args: [--strict, --show-error-codes, --pretty]
+
+  # Black - code formatter (backup, ruff-format is primary)
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        args: [--check, --diff]
+
+  # General hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: debug-logger
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  # Commit message linting (conventional commits)
+  - repo: https://github.com/committools/pre-commit-commitlint
+    rev: v1.0.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
+
+# CI configuration
+ci:
+  autofix_prs: true
+  autoupdate_schedule: monthly
+  skip: [mypy]  # Run mypy separately in CI for speed
