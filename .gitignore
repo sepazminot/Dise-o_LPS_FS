@@ -1,0 +1,167 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+poetry.lock
+*.pid
+*.seed
+*.pid.lock
+
+# Node / Frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+dist/
+dist-ssr/
+*.local
+.nuxt/
+.cache/
+.parcel-cache/
+.next/
+out/
+.nuxt/
+.vuepress/dist/
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.vite/
+*.tsbuildinfo
+
+# PHP / Laravel
+/vendor/
+/node_modules/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/logs
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db
+.phpunit.cache
+.php_cs.cache
+*.log
+
+# Laravel specific
+/storage/app/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*
+/storage/logs/*
+/storage/framework/*.json
+/rr
+.rr.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.history/
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Kubernetes
+*.kubeconfig
+kubeconfig
+
+# Secrets
+*.pem
+*.key
+*.crt
+secrets/
+*.secret
+.secrets/
+.env.local
+.env.*.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.temp
+
+# Build artifacts
+bin/
+obj/
+out/
+target/
+
+# Testing
+.coverage
+.pytest_cache/
+.cache/
+.parcel-cache
+
+# Misc
+*.pid
+*.seed
+*.pid.lock
+.npm
+.eslintcache
+
+# Roadrunner
+.rr.yaml
+rr
+
+# Planificación (opcional - comentar si se quiere versionar)
+# Planificacion_Sprint1_G6_MEJORADA.xlsx
