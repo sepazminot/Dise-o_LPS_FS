@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package course.v1;
+
+option go_package = "github.com/grupo6/educational-contracts/gen/go/course/v1;coursev1";
+//option python_package = "educational.contracts.course.v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "student/v1/student.proto";
+
+message Course {
+  string id = 1;
+  string code = 2;
+  string name = 3;
+  string description = 4;
+  int32 credits = 5;
+  int32 capacity = 6;
+  string teacher_id = 7;
+  string academic_period_id = 8;
+  repeated string prerequisites = 9;  // Course IDs
+  bool is_active = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+}
+
+message CreateCourseRequest {
+  string code = 1;
+  string name = 2;
+  string description = 3;
+  int32 credits = 4;
+  int32 capacity = 5;
+  string teacher_id = 6;
+  string academic_period_id = 7;
+  repeated string prerequisites = 8;
+}
+
+message UpdateCourseRequest {
+  string id = 1;
+  google.protobuf.StringValue name = 2;
+  google.protobuf.StringValue description = 3;
+  google.protobuf.Int32Value credits = 4;
+  google.protobuf.Int32Value capacity = 5;
+  google.protobuf.StringValue teacher_id = 6;
+  google.protobuf.BoolValue is_active = 7;
+}
+
+message GetCourseRequest {
+  string id = 1;
+}
+
+message ListCoursesRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  string search = 3;
+  string teacher_id = 4;
+  string academic_period_id = 5;
+  bool is_active = 6;
+}
+
+message ListCoursesResponse {
+  repeated Course courses = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+  int32 total_pages = 5;
+}
+
+message DeleteCourseRequest {
+  string id = 1;
+}
+
+message DeleteCourseResponse {
+  bool success = 1;
+}
+
+message GetCourseStudentsRequest {
+  string course_id = 1;
+}
+
+message GetCourseStudentsResponse {
+  repeated student.v1.Student students = 1;
+}
+
+service CourseService {
+  rpc CreateCourse(CreateCourseRequest) returns (Course);
+  rpc GetCourse(GetCourseRequest) returns (Course);
+  rpc UpdateCourse(UpdateCourseRequest) returns (Course);
+  rpc DeleteCourse(DeleteCourseRequest) returns (DeleteCourseResponse);
+  rpc ListCourses(ListCoursesRequest) returns (ListCoursesResponse);
+  rpc GetCourseStudents(GetCourseStudentsRequest) returns (GetCourseStudentsResponse);
+}

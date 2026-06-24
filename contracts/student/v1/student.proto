@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package student.v1;
+
+option go_package = "github.com/grupo6/educational-contracts/gen/go/student/v1;studentv1";
+//option python_package = "educational.contracts.student.v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+message Student {
+  string id = 1;
+  string student_code = 2;
+  string email = 3;
+  string full_name = 4;
+  string document_type = 5;  // DNI, PASSPORT, etc.
+  string document_number = 6;
+  google.protobuf.Timestamp birth_date = 7;
+  string phone = 8;
+  string address = 9;
+  bool is_active = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+}
+
+message CreateStudentRequest {
+  string student_code = 1;
+  string email = 2;
+  string full_name = 3;
+  string document_type = 4;
+  string document_number = 5;
+  google.protobuf.Timestamp birth_date = 6;
+  string phone = 7;
+  string address = 8;
+}
+
+message UpdateStudentRequest {
+  string id = 1;
+  google.protobuf.StringValue email = 2;
+  google.protobuf.StringValue full_name = 3;
+  google.protobuf.StringValue phone = 4;
+  google.protobuf.StringValue address = 5;
+  google.protobuf.BoolValue is_active = 6;
+}
+
+message GetStudentRequest {
+  string id = 1;
+}
+
+message ListStudentsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  string search = 3;
+  string course_id = 4;
+  bool is_active = 5;
+}
+
+message ListStudentsResponse {
+  repeated Student students = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+  int32 total_pages = 5;
+}
+
+message DeleteStudentRequest {
+  string id = 1;
+}
+
+message DeleteStudentResponse {
+  bool success = 1;
+}
+
+service StudentService {
+  rpc CreateStudent(CreateStudentRequest) returns (Student);
+  rpc GetStudent(GetStudentRequest) returns (Student);
+  rpc UpdateStudent(UpdateStudentRequest) returns (Student);
+  rpc DeleteStudent(DeleteStudentRequest) returns (DeleteStudentResponse);
+  rpc ListStudents(ListStudentsRequest) returns (ListStudentsResponse);
+}

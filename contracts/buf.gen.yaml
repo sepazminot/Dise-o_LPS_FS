@@ -1,0 +1,21 @@
+version: v1
+plugins:
+  # 1. Mensajes puros de Python
+  - plugin: buf.build/protocolbuffers/python
+    out: ../../backend/app/interfaces/grpc
+
+  # 2. Servicios gRPC de Python (Sustituye la opción problemática)
+  - plugin: buf.build/grpc/python
+    out: ../../backend/app/interfaces/grpc
+
+  # 3. Go (para grpc-gateway, tooling interno)
+  - plugin: buf.build/protocolbuffers/go
+    out: ../../infra/k8s/base/grpc-gen
+    opt: paths=source_relative
+
+  # 4. gRPC Gateway (REST transcoding)
+  - plugin: buf.build/grpc-ecosystem/gateway
+    out: ../../infra/k8s/base/grpc-gen
+    opt:
+      - paths=source_relative
+      - generate_unbound_methods=true

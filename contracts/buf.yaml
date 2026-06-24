@@ -1,0 +1,25 @@
+version: v1
+name: buf.build/grupo6/educational-contracts
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
+lint:
+  use:
+    - STANDARD
+    #- PROTO_FILE_NOT_EMPTY
+    #- SERVICE_NOT_EMPTY
+    - PACKAGE_VERSION_SUFFIX
+  except:
+    #- FIELD_NOT_REQUIRED
+  ignore_only:
+    PACKAGE_VERSION_SUFFIX:
+      - auth/v1/auth.proto
+      - student/v1/student.proto
+      - course/v1/course.proto
+      - grade/v1/grade.proto
+breaking:
+  use:
+    - FILE
+  ignore_only:
+    EXTENSION_RANGE:
+      - auth/v1/auth.proto

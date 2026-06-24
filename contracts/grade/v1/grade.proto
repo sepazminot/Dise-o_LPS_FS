@@ -1,0 +1,171 @@
+syntax = "proto3";
+
+package grade.v1;
+
+option go_package = "github.com/grupo6/educational-contracts/gen/go/grade/v1;gradev1";
+//option python_package = "educational.contracts.grade.v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "student/v1/student.proto";
+import "course/v1/course.proto";
+
+message Grade {
+  string id = 1;
+  string student_id = 2;
+  string course_id = 3;
+  string activity_name = 4;
+  double score = 5;  // 0.0 - 20.0
+  double weight = 6;  // percentage weight
+  string graded_by = 7;
+  google.protobuf.Timestamp graded_at = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message GradeSheet {
+  string course_id = 1;
+  repeated Grade grades = 2;
+  double course_average = 3;
+  int32 total_students = 4;
+  int32 graded_students = 5;
+}
+
+message CreateGradeRequest {
+  string student_id = 1;
+  string course_id = 2;
+  string activity_name = 3;
+  double score = 4;
+  double weight = 5;
+}
+
+message UpdateGradeRequest {
+  string id = 1;
+  google.protobuf.DoubleValue score = 2;
+  google.protobuf.DoubleValue weight = 3;
+  google.protobuf.StringValue activity_name = 4;
+}
+
+message GetGradeRequest {
+  string id = 1;
+}
+
+message ListGradesRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  string student_id = 3;
+  string course_id = 4;
+  string activity_name = 5;
+}
+
+message ListGradesResponse {
+  repeated Grade grades = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+  int32 total_pages = 5;
+}
+
+message DeleteGradeRequest {
+  string id = 1;
+}
+
+message DeleteGradeResponse {
+  bool success = 1;
+}
+
+message GetStudentGradesRequest {
+  string student_id = 1;
+  string course_id = 2;
+}
+
+message GetStudentGradesResponse {
+  repeated Grade grades = 1;
+  double average = 2;
+}
+
+message GetCourseGradeSheetRequest {
+  string course_id = 1;
+}
+
+message GetCourseGradeSheetResponse {
+  GradeSheet grade_sheet = 1;
+}
+
+service GradeService {
+  rpc CreateGrade(CreateGradeRequest) returns (Grade);
+  rpc GetGrade(GetGradeRequest) returns (Grade);
+  rpc UpdateGrade(UpdateGradeRequest) returns (Grade);
+  rpc DeleteGrade(DeleteGradeRequest) returns (DeleteGradeResponse);
+  rpc ListGrades(ListGradesRequest) returns (ListGradesResponse);
+  rpc GetStudentGrades(GetStudentGradesRequest) returns (GetStudentGradesResponse);
+  rpc GetCourseGradeSheet(GetCourseGradeSheetRequest) returns (GetCourseGradeSheetResponse);
+}
+
+message Enrollment {
+  string id = 1;
+  string student_id = 2;
+  string course_id = 3;
+  string status = 4;  // ENROLLED, DROPPED, WAITLIST
+  google.protobuf.Timestamp enrolled_at = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message CreateEnrollmentRequest {
+  string student_id = 1;
+  string course_id = 2;
+}
+
+message UpdateEnrollmentRequest {
+  string id = 1;
+  string status = 2;  // ENROLLED, DROPPED, WAITLIST
+}
+
+message GetEnrollmentRequest {
+  string id = 1;
+}
+
+message ListEnrollmentsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  string student_id = 3;
+  string course_id = 4;
+  string status = 5;
+}
+
+message ListEnrollmentsResponse {
+  repeated Enrollment enrollments = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+  int32 total_pages = 5;
+}
+
+message DeleteEnrollmentRequest {
+  string id = 1;
+}
+
+message DeleteEnrollmentResponse {
+  bool success = 1;
+}
+
+message GetCourseEnrollmentsRequest {
+  string course_id = 1;
+}
+
+message GetCourseEnrollmentsResponse {
+  repeated Enrollment enrollments = 1;
+  int32 enrolled_count = 2;
+  int32 waitlist_count = 3;
+}
+
+service EnrollmentService {
+  rpc CreateEnrollment(CreateEnrollmentRequest) returns (Enrollment);
+  rpc GetEnrollment(GetEnrollmentRequest) returns (Enrollment);
+  rpc UpdateEnrollment(UpdateEnrollmentRequest) returns (Enrollment);
+  rpc DeleteEnrollment(DeleteEnrollmentRequest) returns (DeleteEnrollmentResponse);
+  rpc ListEnrollments(ListEnrollmentsRequest) returns (ListEnrollmentsResponse);
+  rpc GetCourseEnrollments(GetCourseEnrollmentsRequest) returns (GetCourseEnrollmentsResponse);
+}

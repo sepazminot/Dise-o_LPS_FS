@@ -1,0 +1,23 @@
+version: v1
+plugins:
+  # Python (backend FastAPI)
+  - plugin: buf.build/protocolbuffers/python
+    out: ../../backend/app/interfaces/grpc
+    opt: python_grpc_output_path=../../backend/app/interfaces/grpc
+  # Go (para grpc-gateway, tooling interno)
+  - plugin: buf.build/protocolbuffers/go
+    out: ../../infra/k8s/base/grpc-gen
+    opt: paths=source_relative
+  # gRPC Gateway (REST transcoding)
+  # - plugin: buf.build/grpc-ecosystem/grpc-gateway
+  - plugin: buf.build/grpc-ecosystem/gateway
+    out: ../../infra/k8s/base/grpc-gen
+    opt:
+      - paths=source_relative
+      - generate_unbound_methods=true
+  # TypeScript (opcional, para frontend si se usa gRPC-web)
+  # - plugin: buf.build/bufbuild/buf-plugin-ts
+  #   out: ../../frontend/resources/grpc
+  #   opt: ts_proto_output_path=../../frontend/resources/grpc
+# inputs:
+  # - directory: .
