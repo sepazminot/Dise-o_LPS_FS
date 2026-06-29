@@ -8,7 +8,6 @@ option go_package = "github.com/grupo6/educational-contracts/gen/go/course/v1;co
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
-import "student/v1/student.proto";
 
 message Course {
   string id = 1;
@@ -80,7 +79,7 @@ message GetCourseStudentsRequest {
 }
 
 message GetCourseStudentsResponse {
-  repeated student.v1.Student students = 1;
+  repeated string student_ids = 1;
 }
 
 service CourseService {
