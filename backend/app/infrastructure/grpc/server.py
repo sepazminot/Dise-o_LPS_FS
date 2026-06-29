@@ -7,6 +7,9 @@ from concurrent import futures
 import structlog
 
 from app.infrastructure.config.settings import get_settings
+from app.infrastructure.database.session import async_session_factory
+from app.interfaces.grpc.auth_server import AuthGrpcService
+from app.interfaces.grpc import auth_pb2_grpc
 
 logger = structlog.get_logger(__name__)
 settings = get_settings()
@@ -22,10 +25,9 @@ async def start_grpc_server() -> asyncio.Task:
         ],
     )
     
-    # Add services here once implemented
-    # from app.interfaces.grpc.auth_service import AuthServiceServicer
-    # from generated.auth.v1 import auth_pb2_grpc
-    # auth_pb2_grpc.add_AuthServiceServicer_to_server(AuthServiceServicer(), server)
+    # Add AuthService
+    auth_service = AuthGrpcService(async_session_factory)
+    auth_pb2_grpc.add_AuthServiceServicer_to_server(auth_service, server)
     
     listen_addr = f"{settings.GRPC_HOST}:{settings.GRPC_PORT}"
     server.add_insecure_port(listen_addr)
